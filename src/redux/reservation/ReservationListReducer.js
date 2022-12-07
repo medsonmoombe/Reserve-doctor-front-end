@@ -1,21 +1,11 @@
 /* It's setting the API URL. */
 /* It's importing the axios library. */
 import axios from 'axios';
-// import { useSelector } from 'react-redux';
 
-// const user = useSelector((state) => state.user);
-// console.log(user);
-// const users = {
-//   user: {
-//     name: 'john Doe',
-//     email: 'john@test.com',
-//   },
-// };
-// const initialUser = localStorage.getItem('user').length !== 0
-//   ? JSON.parse(localStorage.getItem('user', users))
-//   : null;
-// console.log(initialUser);
-const API_URL = 'http://localhost:3000/api/v1/users/1/reservations/';
+const user = JSON.parse(localStorage.getItem('user'));
+console.log(user);
+
+const API_URL = `http://localhost:3000/api/v1/users/${user === null ? 1 : user.user.id}/reservations/`;
 /* It's setting the initial state of the store. */
 const FETCH_RESERVATIONS = 'FETCH_RESERVATIONS';
 const FETCH_RESERVATIONS_SUCCESS = 'FETCH_RESERVATIONS_SUCCESS';

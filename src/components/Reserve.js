@@ -15,7 +15,6 @@ function Reserve() {
 
   const doctor = useSelector((state) => state.doctors.doctor);
   const doctors = Array.from(doctor);
-
   // const path = window.location.pathname;
   const { register, handleSubmit } = useForm();
 
