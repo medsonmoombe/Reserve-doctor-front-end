@@ -3,9 +3,9 @@
 import axios from 'axios';
 
 const user = JSON.parse(localStorage.getItem('user'));
-console.log(user);
 
-const API_URL = `http://localhost:3000/api/v1/users/${user === null ? 1 : user.user.id}/reservations/`;
+const API_URL = `http://localhost:3000/api/v1/users/${!user === null ? user.user.id : 1}/reservations/`;
+console.log(user === null ? 1 : user.user.id);
 /* It's setting the initial state of the store. */
 const FETCH_RESERVATIONS = 'FETCH_RESERVATIONS';
 const FETCH_RESERVATIONS_SUCCESS = 'FETCH_RESERVATIONS_SUCCESS';
