@@ -1,6 +1,5 @@
 .App {
   display: flex;
-
 }
 
 .main-home {
@@ -69,6 +68,7 @@
   height: 100%;
   background-color: rgb(238, 241, 250);
   left: 0;
+  z-index: 99;
 }
 
 .humbergur {
