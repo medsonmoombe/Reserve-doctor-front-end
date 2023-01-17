@@ -8,6 +8,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
   const user = useSelector((state) => state.user);
 
   const formSubmit = (e) => {
@@ -16,17 +17,21 @@ const Register = () => {
       dispatch(registeration({ email, username }));
       setLoading(true);
     }
+    if (user.error) {
+      setErr(true);
+      setLoading(false);
+    }
   };
 
   if (user.logged_in) {
     return <Navigate replace to="/login" />;
   }
-
   return (
     <div
       className="container-reg"
     >
       <h2 className="register-title">Sign Up</h2>
+      { err ? <p className="text-amber-700 ">{user.error}</p> : '' }
       <form onSubmit={formSubmit} className="reg-form">
         <div className="form-inputs">
           <input
@@ -51,7 +56,7 @@ const Register = () => {
           />
         </div>
         {loading ? (
-          <button type="button">Loading...</button>
+          <button className="px-2 py-2" type="button">Loading...</button>
         ) : (
           <button type="submit" className="btn-reg">
             Sign up

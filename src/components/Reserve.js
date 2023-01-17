@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
-import { addReservations } from '../redux/reserve/ReservationFormReducer';
 import { fetchDoctors } from '../redux/doctor/DoctorListReducer';
 
 function Reserve() {
   const dispatch = useDispatch();
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     dispatch(fetchDoctors());
@@ -26,27 +26,23 @@ function Reserve() {
       .then((res) => res);
   };
 
-  // const backToFirstPage = () => {
-  //   setLoadingFirst(false);
-  //   setCars([]);
-  // };
-
-  // if (reserved) {
-  //   return <Navigate replace to="/reservations" />;
-  // }
   // const path = window.location.pathname;
   const { register, handleSubmit } = useForm();
 
   // onSubmit go to the path /reservations
   const onSubmit = (doctors) => {
     reserveDoctor(doctors);
-    window.location.href = '/reservations';
+    if (doctors.doctor_id === 'undefined') {
+      setError(true);
+    }
+    // window.location.href = '/reservations';
   };
 
   return (
     <div className="container-fluid flex w-full">
       <div className="container-fluid w-full h-screen flex flex-col items-center p-8">
         <h1 className="text-3xl md:text-4xl sm:text-md font-bold text-lime-600 md:mt-16 mt-24 mb-6">Add Reservation</h1>
+        {error ? <p className="text-red-700"> Please kindly select a Doctor, doctor field cant be empty! </p> : '' }
         <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete="off" className="card w-full md:w-8/12 p-8 rounded-lg bg-mySpend-blueDoctorLight shadow-md">
           <div className="card-body w-full  md:flex gap-1 ">
             <div className="flex flex-col md:w-4/12">
@@ -65,10 +61,10 @@ function Reserve() {
               <label htmlFor="name" className="block text-grayDark text-lg md:text-center mt-2 md:mb-2">
                 Select Doctor
               </label>
-              <select name="doctor" placeholder="Choose a doctor" {...register('doctor_id')}>
+              <select className=" bg-red-700 " name="doctor" placeholder="Choose a doctor" {...register('doctor_id')}>
                 {
                   doctors.map((doctor) => (
-                    <option key={doctor.id} value={doctor.id}>
+                    <option className="cursor-pointer" key={doctor.id} value={doctor.id}>
                       {doctor.name}
                     </option>
                   ))

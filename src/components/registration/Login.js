@@ -7,6 +7,7 @@ import { login } from '../../redux/user/RegisterLoginSlice';
 const Login = () => {
   const [username, setUsername] = useState('');
   const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
@@ -26,6 +27,10 @@ const Login = () => {
       dispatch(login(username));
       setLoading(true);
     }
+    if (user.error) {
+      setErr(true);
+      setLoading(false);
+    }
   };
 
   if (user.logged_in) {
@@ -38,6 +43,7 @@ const Login = () => {
       className="container-reg"
     >
       <h2 className="register-title">Log in</h2>
+      { err ? <p className="text-amber-700 ">{user.error}</p> : '' }
       <form onSubmit={formSubmit} className="reg-form">
         <div className="form-inputs">
           <input
