@@ -1,40 +1,29 @@
 import { configureStore } from '@reduxjs/toolkit';
+import storage from 'redux-persist/lib/storage';
+import { combineReducers } from 'redux';
+import {
+  persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER,
+} from 'redux-persist';
 import doctorReducer from './doctor/DoctorListReducer';
-import register from './user/RegisterLoginSlice';
-import { reservationReducer } from './reservation/ReservationListReducer';
-import { reservationFormReducer } from './reserve/ReservationFormReducer';
+import RegisterLoginSlice from './user/RegisterLoginSlice';
 
-function saveToLocalStorage(store) {
-  try {
-    const serializedStore = JSON.stringify(store);
-    window.localStorage.setItem('store', serializedStore);
-  } catch (e) {
-    const error = new Error('Error saving to local storage');
-    throw error;
-  }
-}
+const persistConfig = {
+  key: 'counter',
+  storage,
+};
 
-function loadFromLocalStorage() {
-  try {
-    const serializedStore = window.localStorage.getItem('store');
-    if (serializedStore === null) return undefined;
-    return JSON.parse(serializedStore);
-  } catch (e) {
-    const error = new Error('Error loading from local storage');
-    throw error;
-  }
-}
-
-const persistedState = loadFromLocalStorage();
-
-const store = configureStore({
-  reducer: {
-    doctors: doctorReducer,
-    user: register,
-    reservations: reservationReducer,
-    reserve: reservationFormReducer,
-  },
-  persistedState,
+const reducers = combineReducers({
+  doctors: doctorReducer,
+  user: RegisterLoginSlice,
 });
-store.subscribe(() => saveToLocalStorage(store.getState()));
-export default store;
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+export default configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+});

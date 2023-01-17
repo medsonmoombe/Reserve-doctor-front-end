@@ -11,7 +11,7 @@ const createDoctor = (payload) => ({
 
 export const addDoctor = (payload) => async (dispatch) => {
   axios
-    .post('http://localhost:3000/api/v1/doctors', payload)
+    .post('https://doctor-re.onrender.com/api/v1/doctors', payload)
     .then((res) => {
       dispatch(createDoctor(res.data));
     })

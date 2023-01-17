@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const fetchDoctors = createAsyncThunk('fetchDoctors', async () => {
-  const response = await axios.get('http://127.0.0.1:3000/api/v1/doctors/');
+  const response = await axios.get('https://doctor-re.onrender.com/api/v1/doctors/');
   const doctors = await response.data;
   return doctors;
 });

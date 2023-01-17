@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { addReservations } from '../redux/reserve/ReservationFormReducer';
@@ -15,12 +16,30 @@ function Reserve() {
 
   const doctor = useSelector((state) => state.doctors.doctor);
   const doctors = Array.from(doctor);
+  const user = useSelector((state) => state.user);
+
+  const reserveDoctor = async (reservations) => {
+    await axios
+      .post(
+        `https://doctor-re.onrender.com/api/v1/reservations/${user.user.id}`, reservations,
+      )
+      .then((res) => res);
+  };
+
+  // const backToFirstPage = () => {
+  //   setLoadingFirst(false);
+  //   setCars([]);
+  // };
+
+  // if (reserved) {
+  //   return <Navigate replace to="/reservations" />;
+  // }
   // const path = window.location.pathname;
   const { register, handleSubmit } = useForm();
 
   // onSubmit go to the path /reservations
   const onSubmit = (doctors) => {
-    dispatch(addReservations(doctors));
+    reserveDoctor(doctors);
     window.location.href = '/reservations';
   };
 

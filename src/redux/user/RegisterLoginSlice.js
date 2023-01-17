@@ -12,7 +12,7 @@ export const registeration = createAsyncThunk(
   ({ email, username }) => {
     const result = axios
       .post(
-        `http://localhost:3000/api/v1/register/${username}/${email}`,
+        `https://doctor-re.onrender.com/api/v1/register/${username}/${email}`,
       )
       .then((response) => response.data);
     localStorage.setItem('user', result.data);
@@ -22,7 +22,7 @@ export const registeration = createAsyncThunk(
 
 export const login = createAsyncThunk('user/login', (username) => {
   const result = axios
-    .get(`http://localhost:3000/api/v1/login/${username}`)
+    .get(`https://doctor-re.onrender.com/api/v1/login/${username}`)
     .then((response) => response.data);
   localStorage.setItem('user', result.data);
   return result;
@@ -41,9 +41,15 @@ const usersArray = {
 };
 
 export const registerSlice = createSlice({
-  name: 'register',
+  name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => ({
+      ...state,
+      user: [],
+      logged_in: false,
+    }),
+  },
   extraReducers: {
     [registeration.fulfilled]: (state = usersArray, action) => ({
       ...state,
@@ -69,3 +75,4 @@ export const registerSlice = createSlice({
 });
 
 export default registerSlice.reducer;
+export const { logout } = registerSlice.actions;

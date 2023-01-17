@@ -1,8 +1,11 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Link from '@mui/material/Link';
+import { logout } from '../redux/user/RegisterLoginSlice';
 import { SideBarStyle } from './Styles';
 
 const SideLinks = () => {
+  const dispatch = useDispatch();
   const navLinks = [
     { url: '/user/dashboard', name: 'Home', id: 1 },
     { url: '/user/add_doctor', name: 'Add Doctor', id: 2 },
@@ -11,8 +14,8 @@ const SideLinks = () => {
     { url: '/doctors/:id', name: 'Delete Doctor', id: 5 },
   ];
 
-  const logout = () => {
-    localStorage.removeItem('user');
+  const logoutButton = () => {
+    dispatch(logout());
     window.location.href = '/';
   };
 
@@ -41,7 +44,7 @@ const SideLinks = () => {
         <button
           type="button"
           className="logout"
-          onClick={() => logout()}
+          onClick={() => logoutButton()}
         >
           <i className="fa-solid fa-arrow-right-from-bracket me-2" />
           Logout

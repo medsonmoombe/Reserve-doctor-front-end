@@ -1,13 +1,23 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchReservations } from '../redux/reservation/ReservationListReducer';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function Reservations() {
-  const dispatch = useDispatch();
-  const data = useSelector((state) => state.reservations);
+  const [data, setData] = useState([]);
+  const user = useSelector((state) => state.user);
+
+  const fetchReservations = async () => {
+    await axios
+      .get(
+        'https://doctor-re.onrender.com/api/v1/reservations',
+      )
+      .then((res) => setData(res.data));
+  };
+
+  const result = data.filter((reservedDoctor) => reservedDoctor.user_id === user.user.id);
 
   useEffect(() => {
-    dispatch(fetchReservations());
+    fetchReservations();
   }, []);
 
   return (
@@ -25,7 +35,7 @@ export default function Reservations() {
           </thead>
           <tbody className="bg-slate-300">
             {
-              data.reservations?.map((reservation) => (
+              result?.map((reservation) => (
                 <tr key={reservation.id} className="odd:bg-white even:bg-slate-100">
                   <td className="pl-2 py-2">{reservation.doctor.name}</td>
                   <td>{reservation.city}</td>
@@ -36,7 +46,7 @@ export default function Reservations() {
                   </td>
                   <td>{reservation.datetime}</td>
                 </tr>
-              )) ?? <tr><td colSpan="12">No reservations</td></tr>
+              )) ?? <tr><td colSpan="12"> No reservations Available yet.</td></tr>
             }
           </tbody>
         </table>

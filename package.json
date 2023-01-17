@@ -32,7 +32,9 @@
     "react-redux": "^8.0.4",
     "react-router-dom": "^6.4.1",
     "react-scripts": "^5.0.1",
+    "redux": "^4.2.0",
     "redux-mock-store": "^1.5.4",
+    "redux-persist": "^6.0.0",
     "styled-components": "^5.3.6",
     "tailwindcss": "^3.0.7",
     "web-vitals": "^2.1.4"
