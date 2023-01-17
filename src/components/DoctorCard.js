@@ -9,10 +9,10 @@ const DoctorCard = ({
   const [errorMessage, setErrorMessage] = useState('');
   const removeDoctor = (id) => {
     axios
-      .delete(`http://localhost:3000/api/v1/doctors/${id}`)
+      .delete(`https://doctor-re.onrender.com/api/v1/doctors/${Number(id)}`)
       .then(() => {
         let filteredDoctors = [];
-        filteredDoctors = doctors.filter((doctor) => doctor.id !== id);
+        filteredDoctors = doctors.filter((doctor) => Number(doctor.id) !== Number(id));
         setDoctors(filteredDoctors);
       })
       .catch((error) => {

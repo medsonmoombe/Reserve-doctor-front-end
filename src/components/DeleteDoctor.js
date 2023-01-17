@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-// import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import DoctorCard from './DoctorCard';
 
 const DeleteDoctor = () => {
-  const [doctors, setDoctors] = useState([]);
-  // const [loading, setLoading] = useState(false);
-
-  const currentUser = localStorage.getItem('user') || '';
-  const json = JSON.parse(currentUser);
-  const user = (json);
-  //  console.log(user.user);
+  const [doc, setDoc] = useState([]);
+  const user = useSelector((state) => state.user.user);
+  const doctors = useSelector((state) => state.doctors.doctor);
+  const userDoctor = doctors.filter((doc) => Number(doc.user_id) === Number(user.id));
+  console.log(doc);
   useEffect(() => {
-    // setLoading(true);
-    axios
-      .get(`http://127.0.0.1:3000/api/v1/users/doctor/${user.user.id}`)
-      .then((response) => {
-        setDoctors(response.data.doctors);
-        // setLoading(false);
-      });
+    setDoc(userDoctor);
   }, []);
   return (
     <>
-      { doctors.length <= 0 ? (
+      { userDoctor.length === 0 ? (
         <div className="flex lg:absolute lg:left-[30%] lg:top-[5%] justify-center items-center">
           <h2 className="mt-5 text-center text-amber-700">
             You don&apos;t have any doctors in our system yet.
@@ -31,14 +22,14 @@ const DeleteDoctor = () => {
       )
         : (
           <div className="delete-doc-div">
-            <h2 className="h2 text-center mt-5 text-uppercase">
-              <strong>WELCOME TO THE DELETE AREA</strong>
+            <h2 className="h2 text-center mt-5 sm:text-sm text-uppercase">
+              <strong className="text-xl">WELCOME TO THE DELETE AREA</strong>
             </h2>
-            <p className="text-center text-muted mb-5">
+            <p className="text-center text-muted mb-5 pt-2 text-sm">
               Please click on delete button below to delete a doctor
             </p>
             <div className="container-fluid d-flex flex-wrap justify-content-center">
-              {doctors.map((doctor) => (
+              {userDoctor.map((doctor) => (
                 <DoctorCard
                   key={doctor.id}
                   id={doctor.id}
@@ -46,7 +37,7 @@ const DeleteDoctor = () => {
                   name={doctor.name}
                   speciality={doctor.speciality}
                   doctors={doctors}
-                  setDoctors={setDoctors}
+                  setDoctors={setDoc}
                 />
               ))}
             </div>
