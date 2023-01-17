@@ -20,16 +20,6 @@ const DeleteDoctor = () => {
         // setLoading(false);
       });
   }, []);
-
-  // if (doctors.length <= 0) {
-  //   if (loading) {
-  //     return (
-  //       <div className="container-fluid d-flex justify-content-center align-items-center vh-100">
-  //         <i className="fa-solid fa-spinner fa-spin fs-1" />
-  //       </div>
-  //     );
-  //   }
-  // }
   return (
     <>
       { doctors.length <= 0 ? (

@@ -332,6 +332,14 @@
     height: 100vh !important;
   }
 
+  .top {
+    margin-top: 40%;
+  }
+  
+  .bottom {
+    margin-bottom: 140px;
+  }
+
   .reg-form input {
     width: auto;
     padding: 8px;
@@ -409,6 +417,14 @@
   .home-top-content h1 {
     font-size: 25px;
     width: 60%;
+  }
+
+  .top {
+    margin-top: 30%;
+  }
+
+  .bottom {
+    margin-bottom: 140px;
   }
 
   .h-full {

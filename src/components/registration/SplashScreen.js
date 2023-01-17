@@ -6,7 +6,7 @@ const SplashScreen = () => (
   <>
     <section className="splash-sec">
       <div className="overlay" />
-      <div className="top">
+      <div className="top sm:mt-[120px]">
         <div className="logo-div1">
           <img src={logo} alt="name" className="logo1" />
         </div>
@@ -18,7 +18,7 @@ const SplashScreen = () => (
           <span>Login</span>
         </NavLink>
       </div>
-      <div className="bottom">
+      <div className="bottom sm:mb-[140px]">
         <p className="register-link">
           Don&apos;t have an account?
           {' '}

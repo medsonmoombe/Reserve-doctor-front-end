@@ -22,7 +22,7 @@ function App() {
     </>
   );
   return (
-    <div className="App pb-4">
+    <div className="App pb-0">
       <Routes>
         <Route exact path="/" element={<SplashScreen />} />
         <Route path="/login" element={<Login />} />
