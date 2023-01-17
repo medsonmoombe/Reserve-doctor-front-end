@@ -2,7 +2,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
-// import fetchDoctors from '../redux/doctors/doctors';
 
 const DoctorDetails = () => {
   const params = useParams();
